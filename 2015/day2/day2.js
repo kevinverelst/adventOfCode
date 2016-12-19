@@ -1,16 +1,19 @@
 function work() {
-    document.getElementById('output').innerHTML = loopPresents(document.getElementById('input').value);
+    loopPresents(document.getElementById('input').value);
 }
 
 function loopPresents(input) {
     var total = 0;
+    var ribbon = 0;
     var presentArray = input.split(" ");
 
     for (var i = 0; i < presentArray.length; i++) {
         var present = presentArray[i].split("x");
         total += calculatePresentDimensions(present[0], present[1], present[2]);
+        ribbon += calculateRibbon(present);
     }
-    return total;
+    document.getElementById('output').innerHTML = total;
+    document.getElementById('ribbon').innerHTML = ribbon;
 }
 
 function calculatePresentDimensions(length, width, height) {
@@ -20,4 +23,13 @@ function calculatePresentDimensions(length, width, height) {
 
 function indexOfSmallest(a) {
     return a.indexOf(Math.min.apply(Math, a));
+}
+
+function calculateRibbon(a) {
+    a.sort(function (a, b) {
+        return a - b
+    });
+    var test = parseInt(a[0]) + parseInt(a[0]) + parseInt(a[1]) + parseInt(a[1]);
+    var cubic = (a[0] * a[1] * a[2]);
+    return  test + cubic;
 }
